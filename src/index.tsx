@@ -1,6 +1,7 @@
-import ReactDOM from 'react-dom';
-import { createServer, Model } from "miragejs"
+import { Model, createServer } from "miragejs"
+
 import { App } from './App';
+import ReactDOM from 'react-dom';
 
 createServer({
 
@@ -13,10 +14,10 @@ createServer({
       transactions: [
         {
           id: 1,
-          title: "Freelance de web",
+          title: "Freelance",
           type: "deposit",
           category: "Dev",
-          amount:600,
+          amount: 1200,
           createdAt: new Date("2021-02-12 09:30")
         },
         {
@@ -24,7 +25,16 @@ createServer({
           title: "Aluguel",
           type: "withdraw",
           category: "Casa",
-          amount:1200,
+          amount: 1300,
+          createdAt: new Date("2021-02-14 11:15")
+
+        },
+        {
+          id: 3,
+          title: "Dividendos",
+          type: "deposit",
+          category: "Investments",
+          amount: 300,
           createdAt: new Date("2021-02-14 11:15")
 
         }
@@ -40,14 +50,15 @@ createServer({
     })
 
     this.post("/transactions", (schema, request) => {
-      const data = JSON.parse(request.requestBody)
+      let data = JSON.parse(request.requestBody)
+      data.createdAt = new Date()
       return schema.create("transaction", data)
     })
 
   },
 
 
-  
+
 })
 
 ReactDOM.render(
